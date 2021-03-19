@@ -866,77 +866,48 @@ function createKeymatrix(key) {
     Cách tạo ra ciphertext là tạo ra Columm==plaintext và Row==Key với độ dài là 26 kí tự,
     Sau đó ta sẽ tìm ra vị trí giao nhau-> đó là ciphertext. Cứ thế làm với các kí tự tiếp theo
     */
-function isLetter(string) {
-  return /[a-zA-Z]/i.test(string);
-}
-function KeyExpanding(msg, key) {
-  let result = "";
-  let i = 0;
-  while (i < msg.length) {
-    result += key[i % key.length]; // Lấy kí tự thứ i .(trong trường hợp i dài --> mod độ dài khóa.)
-    i++;
-  }
-  return result;
-}
-
-function vingenereEncry(message, key) {
-  let result = "";
-
-  for (let i = 0, j = 0; i < message.length; i++) {
-    let c = message[i];
-    if (isLetter(c)) {
-      if (c == c.toUpperCase()) {
-        result += String.fromCharCode(
-          ((c.charCodeAt(0) +
-            key.toUpperCase().charCodeAt(j) -
-            2 * "A".charCodeAt(0)) %
-            26) +
-            "A".charCodeAt(0)
-        );
-      } else {
-        result += String.fromCharCode(
-          ((c.charCodeAt(0) +
-            key.toLowerCase().charCodeAt(j) -
-            2 * "a".charCodeAt(0)) %
-            26) +
-            "a".charCodeAt(0)
-        );
-      }
-    } else {
-      result += String.fromCharCode(c);
-    }
-    j = 1+j % key.length;
-  }
-  return result;
-}
-
 function vingenereDecry(message, key) {
-  let result = "";
-
-        for (let i = 0, j = 0; i < message.length; i++) {
-
-            let c = message[i];
-            if (isLetter(c)) {
-                if (c == c.toUpperCase()) {
-                  result += String.fromCharCode(
-                    "Z".charCodeAt(0) -
-                      ((25 - (c.charCodeAt(0) - key.toUpperCase().charCodeAt(j))) %
-                        26)
-                  );
-                } else {
-                  result += String.fromCharCode(
-                    "z".charCodeAt(0) -
-                      ((25 - (c.charCodeAt(0) - key.toLowerCase().charCodeAt(j))) %
-                        26)
-                  );
-                }
-            } else {
-                result += String.fromCharCode(c);
-            }
-
-            j = 1+j % key.length;
+  var result = "";
+  for (var i = 0, j = 0; i < message.length; i++) {
+    {
+      var c = message.charAt(i);
+      if (/* isLetter */ /[a-zA-Z]/.test(c[0])) {
+        if (
+          /* isUpperCase */ (function (s) {
+            return s.toUpperCase() === s;
+          })(c)
+        ) {
+          result += String.fromCharCode(
+            "Z".charCodeAt(0) -
+              ((25 -
+                ((function (c) {
+                  return c.charCodeAt == null ? c : c.charCodeAt(0);
+                })(c) -
+                  (function (c) {
+                    return c.charCodeAt == null ? c : c.charCodeAt(0);
+                  })(key.toUpperCase().charAt(j)))) %
+                26)
+          );
+        } else {
+          result += String.fromCharCode(
+            "z".charCodeAt(0) -
+              ((25 -
+                ((function (c) {
+                  return c.charCodeAt == null ? c : c.charCodeAt(0);
+                })(c) -
+                  (function (c) {
+                    return c.charCodeAt == null ? c : c.charCodeAt(0);
+                  })(key.toLowerCase().charAt(j)))) %
+                26)
+          );
         }
-        return result;
+      } else {
+        result += c;
+      }
+      j = ++j % key.length;
+    }
+  }
+  return result;
 }
 
 function oneTimePadEncry(plainText, key) {
@@ -963,4 +934,48 @@ function oneTimePadDecry(cipherText, key) {
   }
 
   return plainText;
+}
+/* Generated from Java with JSweet 3.0.0 - http://www.jsweet.org */
+function vingenereEncry(message, key) {
+  var result = "";
+  for (var i = 0, j = 0; i < message.length; i++) {
+    {
+      var c = message.charAt(i);
+      if (/* isLetter */ /[a-zA-Z]/.test(c[0])) {
+        if (
+          /* isUpperCase */ (function (s) {
+            return s.toUpperCase() === s;
+          })(c)
+        ) {
+          result += String.fromCharCode(
+            (((function (c) {
+              return c.charCodeAt == null ? c : c.charCodeAt(0);
+            })(c) +
+              (function (c) {
+                return c.charCodeAt == null ? c : c.charCodeAt(0);
+              })(key.toUpperCase().charAt(j)) -
+              2 * "A".charCodeAt(0)) %
+              26) +
+              "A".charCodeAt(0)
+          );
+        } else {
+          result += String.fromCharCode(
+            (((function (c) {
+              return c.charCodeAt == null ? c : c.charCodeAt(0);
+            })(c) +
+              (function (c) {
+                return c.charCodeAt == null ? c : c.charCodeAt(0);
+              })(key.toLowerCase().charAt(j)) -
+              2 * "a".charCodeAt(0)) %
+              26) +
+              "a".charCodeAt(0)
+          );
+        }
+      } else {
+        result += c;
+      }
+      j = ++j % key.length;
+    }
+  }
+  return result;
 }
