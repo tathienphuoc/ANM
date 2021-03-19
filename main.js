@@ -313,7 +313,7 @@ function displayToastMsg() {
   toastMsg.innerHTML = `<div class="icon">
       <i class="fas fa-check-circle"></i>
     </div>
-    <div class="content">Sao chép kết quả thành công</div>`;
+    <div class="content">Sao chép kết quả</div>`;
 
   document.body.appendChild(toastMsg);
 }
