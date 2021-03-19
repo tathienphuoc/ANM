@@ -4,69 +4,52 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Thuật toán mã hóa - An ninh mạng máy tính</title>
     <link rel="stylesheet" href="./main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
   </head>
   <body>
-    <div id="heading"><h1>ENCODE-DECODE</h1></div>
+    <div id="heading"><h1>Mã hóa - Giải mã</h1></div>
     <div class="dropdown">
-      <label >Chon thuat toan:</label>
-      <select name="">
-        <option value="">Thuat toan 1</option>
-        <option value="">Thuat toan 2</option>
-        <option value="">Thuat toan 3</option>
+      <label >Chọn thuật toán:</label>
+      <select id="option" name="option">
+        <option value=""></option>
       </select>
     </div>
 
     <div id="body">
       <div>
-        <textarea name="" id="encodeInput"></textarea>
-      <button class="align-self-end" id="encode" name="encode-decode">Encode<i class="fas fa-arrow-right"></i></button>
+        <textarea name="encodeInput"  id="encodeInput"></textarea>
+      <button class="align-self-end" id="encodeBtn" name="encode-decode">Mã hóa<i class="fas fa-arrow-right"></i></button>
       </div>
       <div>
-        <textarea name="" id="decodeInput"></textarea>
-        <button id="decode" name="encode-decode"><i class="fas fa-arrow-left"></i>Decode</i></button>
+        <textarea name="decodeInput" id="decodeInput"></textarea>
+        <button id="decodeBtn" name="encode-decode" ><i class="fas fa-arrow-left"></i>Giải hóa</i></button>
       </div>
     </div>
     <div id="keyField">
       <label for="keyInput">Key: </label>
-      <input type="text" id="keyInput">
+      <input name="keyInput" rules="number|minNumber:6"id="keyInput" >
     </div>
-    <div id="info">
-      <h1>Thong tin them</h1>
-      <div>
-        <h2>Base64</h2>
-        <p class="d-none">In programming, Base64 is a group of binary-to-text encoding schemes that represent binary data (more specifically, a sequence of 8-bit bytes) in an ASCII string format by translating the data into a radix-64 representation. The term Base64 originates from a specific MIME content transfer encoding. Each non-final Base64 digit represents exactly 6 bits of data. Three 8-bit bytes (i.e., a total of 24 bits) can therefore be represented by four 6-bit Base64 digits.
+    <div id="about">
+      <h1>Thông tin thêm</h1>
+    </div>
 
-Common to all binary-to-text encoding schemes, Base64 is designed to carry data stored in binary formats across channels that only reliably support text content. Base64 is particularly prevalent on the World Wide Web[1] where its uses include the ability to embed image files or other binary assets inside textual assets such as HTML and CSS files.[2]
-
-Base64 is also widely used for sending e-mail attachments. This is required because SMTP - in its original form - was designed to transport 7-bit ASCII characters only. This encoding causes an overhead of 33–36% (33% by the encoding itself; up to 3% more by the inserted line breaks). </p>
-        <button name="readMore">Read more</button>
-      </div><div>
-        <h2>Base64</h2>
-        <p class="d-none">In programming, Base64 is a group of binary-to-text encoding schemes that represent binary data (more specifically, a sequence of 8-bit bytes) in an ASCII string format by translating the data into a radix-64 representation. The term Base64 originates from a specific MIME content transfer encoding. Each non-final Base64 digit represents exactly 6 bits of data. Three 8-bit bytes (i.e., a total of 24 bits) can therefore be represented by four 6-bit Base64 digits.
-
-Common to all binary-to-text encoding schemes, Base64 is designed to carry data stored in binary formats across channels that only reliably support text content. Base64 is particularly prevalent on the World Wide Web[1] where its uses include the ability to embed image files or other binary assets inside textual assets such as HTML and CSS files.[2]
-
-Base64 is also widely used for sending e-mail attachments. This is required because SMTP - in its original form - was designed to transport 7-bit ASCII characters only. This encoding causes an overhead of 33–36% (33% by the encoding itself; up to 3% more by the inserted line breaks). </p>
-        <button name="readMore">Read more</button>
-      </div><div>
-        <h2>Base64</h2>
-        <p class="d-none">In programming, Base64 is a group of binary-to-text encoding schemes that represent binary data (more specifically, a sequence of 8-bit bytes) in an ASCII string format by translating the data into a radix-64 representation. The term Base64 originates from a specific MIME content transfer encoding. Each non-final Base64 digit represents exactly 6 bits of data. Three 8-bit bytes (i.e., a total of 24 bits) can therefore be represented by four 6-bit Base64 digits.
-
-Common to all binary-to-text encoding schemes, Base64 is designed to carry data stored in binary formats across channels that only reliably support text content. Base64 is particularly prevalent on the World Wide Web[1] where its uses include the ability to embed image files or other binary assets inside textual assets such as HTML and CSS files.[2]
-
-Base64 is also widely used for sending e-mail attachments. This is required because SMTP - in its original form - was designed to transport 7-bit ASCII characters only. This encoding causes an overhead of 33–36% (33% by the encoding itself; up to 3% more by the inserted line breaks). </p>
-        <button name="readMore">Read more</button>
-      </div>
-    <div class="toast-msg slide" id="toast-msg">
-        <div class="icon"><i class="fas fa-check-circle"></i></div>
-        <div class="content">This is a text</div>
-        <div class="close-btn"><i class="fas fa-times"></i></div>
-      </div>
     <div id="footer">
+      <div>
+        <h3>THông tin thành viên</h3>
+        <ul>
+          <li>Tạ Thiên Phước</li>
+          <li>Huỳnh Phú Sơn</li>
+          <li>Nguyễn Minh Thông</li>
+          <li>Trần Thị Kim Chi</li>
+        </ul>
+      </div>
+      <div>
+        <p><h3 class="d-inline">Mô tả: </h3>Dựa vào kiến thức về các dạng thuật toán mã hóa đã học trong môn An ninh mạng máy tính. Từ đó xây dụng một trang web đơn giản để thực hành các thuật toán mã hóa</p>
+      </div>
     </div>
     <script src="./main.js"></script>
+
   </body>
 </html>
