@@ -860,46 +860,83 @@ function createKeymatrix(key) {
   return keymatrix;
 }
 
-//THUẬT TOÁN MẬT MÃ VINGENERE
-//1.KeyExpanding : mở rộng key == plaintext để thực hiện encode, decode
-//2.EncodeVingenre: trả về 1 String result đã được mã hóa.
-//3.DecodeVingenre: trả về 1 String result đã được giải mã .
-//4.Key chỉ chấp nhận A-Za-z.
-
-/*
- * Method này dùng để mở rộng key Qui tắc của key là sẽ kéo độ dài cho bằng độ
- * dài plaintext / ciphertext VD: plaintext=iloveu, key=m thì lúc này key sẽ tự
- * mở rộng thành mmmmmm để có thể thực hiện encode. Cách tạo ra ciphertext là
- * tạo ra Columm==plaintext và Row==Key với độ dài là 26 kí tự, Sau đó ta sẽ tìm
- * ra vị trí giao nhau-> đó là ciphertext. Cứ thế làm với các kí tự tiếp theo
- */
-function vingenereEncry(plainText, key) {
-  var alphabet =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!?,:;'/ ";
-  var encryptWord = "";
-  for (var i = 0; i < plainText.length; i++) {
-    encryptWord += alphabet.charAt(
-      (alphabet.indexOf(plainText.charAt(i)) +
-        alphabet.indexOf(key.charAt(i % key.length))) %
-        alphabet.length
-    );
+/*Method này dùng để mở rộng key 
+    Qui tắc của key là sẽ kéo độ dài cho bằng độ dài plaintext / ciphertext
+    VD: plaintext=iloveu, key=m thì lúc này key sẽ tự mở rộng thành mmmmmm để có thể thực hiện encode.
+    Cách tạo ra ciphertext là tạo ra Columm==plaintext và Row==Key với độ dài là 26 kí tự,
+    Sau đó ta sẽ tìm ra vị trí giao nhau-> đó là ciphertext. Cứ thế làm với các kí tự tiếp theo
+    */
+function isLetter(string) {
+  return /[a-zA-Z]/i.test(string);
+}
+function KeyExpanding(msg, key) {
+  let result = "";
+  let i = 0;
+  while (i < msg.length) {
+    result += key[i % key.length]; // Lấy kí tự thứ i .(trong trường hợp i dài --> mod độ dài khóa.)
+    i++;
   }
-  return encryptWord;
+  return result;
 }
 
-function vingenereDecry(cipherText, key) {
-  var alphabet =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!?,:;'/ ";
-  var decryptWord = "";
-  for (var i = 0; i < cipherText.length; i++) {
-    decryptWord += alphabet.charAt(
-      (alphabet.indexOf(cipherText.charAt(i)) +
-        alphabet.length -
-        alphabet.indexOf(key.charAt(i % key.length))) %
-        alphabet.length
-    );
+function vingenereEncry(message, key) {
+  let result = "";
+
+  for (let i = 0, j = 0; i < message.length; i++) {
+    let c = message[i];
+    if (isLetter(c)) {
+      if (c == c.toUpperCase()) {
+        result += String.fromCharCode(
+          ((c.charCodeAt(0) +
+            key.toUpperCase().charCodeAt(j) -
+            2 * "A".charCodeAt(0)) %
+            26) +
+            "A".charCodeAt(0)
+        );
+      } else {
+        result += String.fromCharCode(
+          ((c.charCodeAt(0) +
+            key.toLowerCase().charCodeAt(j) -
+            2 * "a".charCodeAt(0)) %
+            26) +
+            "a".charCodeAt(0)
+        );
+      }
+    } else {
+      result += String.fromCharCode(c);
+    }
+    j = 1+j % key.length;
   }
-  return decryptWord;
+  return result;
+}
+
+function vingenereDecry(message, key) {
+  let result = "";
+
+        for (let i = 0, j = 0; i < message.length; i++) {
+
+            let c = message[i];
+            if (isLetter(c)) {
+                if (c == c.toUpperCase()) {
+                  result += String.fromCharCode(
+                    "Z".charCodeAt(0) -
+                      ((25 - (c.charCodeAt(0) - key.toUpperCase().charCodeAt(j))) %
+                        26)
+                  );
+                } else {
+                  result += String.fromCharCode(
+                    "z".charCodeAt(0) -
+                      ((25 - (c.charCodeAt(0) - key.toLowerCase().charCodeAt(j))) %
+                        26)
+                  );
+                }
+            } else {
+                result += String.fromCharCode(c);
+            }
+
+            j = 1+j % key.length;
+        }
+        return result;
 }
 
 function oneTimePadEncry(plainText, key) {
