@@ -27,7 +27,7 @@ let encryptionAlgorithm = {
     },
     encry: ceasarEncry,
     decry: ceasarDecry,
-    about: `Trong mật mã học, Mật mã Caesar (hay còn được gọi là Mật mã của Caesar, Mật mã chuyển vị, Mã của Caesar hay Chuyển vị Caesar) là một trong những kỹ thuật mã hóa đơn giản và phổ biến nhất. Đây là một dạng mật mã thay thế, trong đó mỗi ký tự trên văn bản thô sẽ được thay bằng một ký tự khác, có vị trí cách nó một khoảng xác định trong bảng chữ cái. Ví dụ với độ dịch chuyển là 3, D sẽ trở thành A, E sẽ trở thành B, v.v. Tên của kỹ thuật mã hóa này được đặt theo tên của Julius Caesar, người đã sử dụng nó trong các thư từ bí mật của mình.[1]
+    about: `Trong mật mã học, Mật mã Caesar (hay còn được gọi là Mật mã của Caesar, Mật mã chuyển vị, Mã của Caesar hay Chuyển vị Caesar) là một trong những kỹ thuật mã hóa đơn giản và phổ biến nhất. Đây là một dạng mật mã thay thế, trong đó mỗi ký tự trên văn bản thô sẽ được thay bằng một ký tự khác, có vị trí cách nó một khoảng xác định trong bảng chữ cái. Ví dụ với độ dịch chuyển là 3, D sẽ trở thành A, E sẽ trở thành B, v.v. Tên của kỹ thuật mã hóa này được đặt theo tên của Julius Caesar, người đã sử dụng nó trong các thư từ bí mật của mình.
 
 Bước mã hóa được thực hiện trong mật mã Caesar thường được kết hợp như một phần của các dạng mã hóa phức tạp hơn, chẳng hạn như mật mã Vigenère, hiện nay vẫn được áp dụng cho mã hóa ROT13. Cũng giống như tất cả các dạng mật mã thay thế một bảng chữ cái khác, mật mã Caesar rất dễ bị phá giải và về cơ bản không đáp ứng đủ khả năng bảo mật thông tin liên lạc trong cuộc sống hiện đại. `,
   },
