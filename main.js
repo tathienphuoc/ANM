@@ -58,12 +58,12 @@ Bước mã hóa được thực hiện trong mật mã Caesar thường đượ
       "* Khóa không được để trống và chỉ chứa các ký tự từ a-z và khoảng trắng.\n" +
       "Thông tin thêm: Độ dài của bản mã phải là số lẻ.",
     encryRules: {
-      key: "required|match:^[a-zs]+$",
-      plainText: "required|match:^[a-zs]+$",
+      key: "required|match:^[a-z ]+$",
+      plainText: "required|match:^[a-z ]+$",
     },
     decryRules: {
-      key: "required|match:^[a-zs]+$",
-      cipherText: `required|match:^[a-zs]+$|cipherPlayfair`,
+      key: "required|match:^[a-z ]+$",
+      cipherText: `required|match:^[a-z ]+$|cipherPlayfair`,
     },
     encry: playfairEncry,
     decry: playfairDecry,
@@ -87,9 +87,27 @@ Bước mã hóa được thực hiện trong mật mã Caesar thường đượ
     decry: vingenereDecry,
     about: `Mật mã Vigenère là một phương pháp mã hóa văn bản bằng cách sử dụng xen kẽ một số phép mã hóa Caesar khác nhau dựa trên các chữ cái của một từ khóa. Nó là một dạng đơn giản của mật mã thay thế dùng nhiều bảng chữ cái. `,
   },
+  OneTimePad: {
+    errorMessage:
+      "=============================Thuật toán OneTimePad=============================\n\n" +
+      "* Bản rõ không được để trống và chỉ chứa các ký tự từ a-z, 0-9 và khoảng trắng.\n" +
+      "* Bản mã không được để trống.\n" +
+      "* Khóa không được để trống và chỉ chứa các ký tự từ a-z, 0-9 và khoảng trắng.\n" +
+      "Thông tin thêm: Độ dài của bản rõ phải bằng độ dài của khóa.",
+    encryRules: {
+      key: "required|match:^[0-9a-z ]+$",
+      plainText: "required|match:^[0-9a-z ]+$|plainOneTimePad",
+    },
+    decryRules: {
+      key: "required|match:^[0-9a-z ]+$",
+    },
+    encry: oneTimePadEncry,
+    decry: oneTimePadDecry,
+    about: `Mậtmã  One-time-pad  được  đề  xuất  bởi  G. Vernam  (1917);  sau đó  đã  được chứng minh là đảm bảo bí mật tuyệt đối (perfect secretcy -1949). Như tên gọi của nó, trong One-time-padkhóa được viết trên 1 băng (tape) dài, và sử dụng đúng 1 lần. Đồng thời chuỗi khóa là chuỗi văn bản sinh ngẫu nhiên, có độ dài bằng văn bản sử dụng hoặc hơn.`,
+  },
 };
 main();
-    
+
 function main() {
   elements.encodeBtn.addEventListener("click", (e) => {
     run(e.target.id);
@@ -227,6 +245,11 @@ function Validator() {
     },
     cipherPlayfair: () => {
       return elements.cipherText.value.length % 2 != 0
+        ? undefined
+        : "Không hợp lệ";
+    },
+    plainOneTimePad: () => {
+      return elements.plainText.value.length === elements.key.value.length
         ? undefined
         : "Không hợp lệ";
     },
@@ -516,17 +539,17 @@ function isValidLineKey(key) {
 
 // 4. ciphertext truyền vào hàm playfairDrcry chỉ bao gồm a-z và khoảng trắng (regex pattern: /^[a-z\s]+$/ )
 
-function playfairEncry(key, plaintext) {
-  let ciphertext = "";
+function playfairEncry(plaintext, key) {
+  var ciphertext = "";
 
-  let keymatrix = createKeymatrix(key);
+  var keymatrix = createKeymatrix(key);
 
-  let filtertext = createFiltertext(plaintext);
+  var filtertext = createFiltertext(plaintext);
 
-  let words = [];
+  var words = [];
   words = filtertext.split(" ");
 
-  for (let i = 0; i < words.length; i++) {
+  for (var i = 0; i < words.length; i++) {
     ciphertext += sub(keymatrix, words[i]);
     if (i < words.length - 1) {
       ciphertext += " ";
@@ -536,15 +559,14 @@ function playfairEncry(key, plaintext) {
   return ciphertext;
 }
 
-function playfairDecry(key, ciphertext) {
-  let plaintext = "";
+function playfairDecry(ciphertext, key) {
+  var plaintext = "";
 
-  let keymatrix = createKeymatrix(key);
+  var keymatrix = createKeymatrix(key);
 
-  let words = [];
+  var words = [];
   words = ciphertext.split(" ");
-
-  for (let i = 0; i < words.length; i++) {
+  for (var i = 0; i < words.length; i++) {
     plaintext += deSub(keymatrix, words[i]);
     if (i < words.length - 1) {
       plaintext += " ";
@@ -878,4 +900,30 @@ function vingenereDecry(cipherText, key) {
     );
   }
   return decryptWord;
+}
+
+function oneTimePadEncry(plainText, key) {
+  let t = 0;
+  let cipherText = "";
+
+  for (let i = 0; i < plainText.length; i++) {
+    t = plainText.charCodeAt(i) + key.charCodeAt(i);
+
+    cipherText += String.fromCharCode(t);
+  }
+  return cipherText;
+}
+
+function oneTimePadDecry(cipherText, key) {
+  let plainText = "";
+
+  let t = 0;
+
+  for (let i = 0; i < cipherText.length; i++) {
+    t = cipherText.charCodeAt(i) - key.charCodeAt(i);
+
+    plainText += String.fromCharCode(t);
+  }
+
+  return plainText;
 }
